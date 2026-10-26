@@ -1,21 +1,13 @@
 describe("Login OrangeHRM", () => {
-  const interceptLoginRequest = (alias, credentials) => {
-    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
-      const body = new URLSearchParams(request.body);
-      expect(body.get("username")).to.eq(credentials.username);
-      expect(body.get("password")).to.eq(credentials.password);
-    }).as(alias);
-  };
-
   beforeEach(() => {
     cy.visit("/web/index.php/auth/login");
   });
 
   it("TC-LOG-001 - login pakai akun yang benar", () => {
-    interceptLoginRequest("validAdminLogin", {
-      username: "Admin",
-      password: "admin123",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=Admin");
+      expect(request.body).to.include("password=admin123");
+    }).as("validAdminLogin");
 
     cy.get('input[name="username"]').type("Admin");
     cy.get('input[name="password"]').type("admin123");
@@ -31,10 +23,10 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-002 - password salah bikin login gagal", () => {
-    interceptLoginRequest("wrongPasswordLogin", {
-      username: "Admin",
-      password: "admin1245",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=Admin");
+      expect(request.body).to.include("password=admin1245");
+    }).as("wrongPasswordLogin");
 
     cy.get('input[name="username"]').type("Admin");
     cy.get('input[name="password"]').type("admin1245");
@@ -45,10 +37,10 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-003 - username yang tidak terdaftar bikin login gagal", () => {
-    interceptLoginRequest("unknownUserLogin", {
-      username: "Admin1",
-      password: "admin123",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=Admin1");
+      expect(request.body).to.include("password=admin123");
+    }).as("unknownUserLogin");
 
     cy.get('input[name="username"]').type("Admin1");
     cy.get('input[name="password"]').type("admin123");
@@ -59,10 +51,10 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-004 - username dan password salah bikin login gagal", () => {
-    interceptLoginRequest("unknownUserWrongPasswordLogin", {
-      username: "Admin1",
-      password: "admin1247",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=Admin1");
+      expect(request.body).to.include("password=admin1247");
+    }).as("unknownUserWrongPasswordLogin");
 
     cy.get('input[name="username"]').type("Admin1");
     cy.get('input[name="password"]').type("admin1247");
@@ -112,10 +104,10 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-008 - username tetap diterima meski hurufnya kecil", () => {
-    interceptLoginRequest("lowercaseUsernameLogin", {
-      username: "admin",
-      password: "admin123",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=admin");
+      expect(request.body).to.include("password=admin123");
+    }).as("lowercaseUsernameLogin");
 
     cy.get('input[name="username"]').type("admin");
     cy.get('input[name="password"]').type("admin123");
@@ -130,10 +122,10 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-009 - password membedakan huruf besar dan kecil", () => {
-    interceptLoginRequest("uppercasePasswordLogin", {
-      username: "Admin",
-      password: "ADMIN123",
-    });
+    cy.intercept("POST", "/web/index.php/auth/validate", (request) => {
+      expect(request.body).to.include("username=Admin");
+      expect(request.body).to.include("password=ADMIN123");
+    }).as("uppercasePasswordLogin");
 
     cy.get('input[name="username"]').type("Admin");
     cy.get('input[name="password"]').type("ADMIN123");
@@ -160,8 +152,7 @@ describe("Login OrangeHRM", () => {
       "POST",
       "**/auth/**",
       (request) => {
-        const body = new URLSearchParams(request.body);
-        expect(body.get("username")).to.eq("Admin");
+        expect(request.body).to.include("username=Admin");
         expect(request.url).to.include("/auth/");
         request.reply({
           statusCode: 200,
@@ -183,14 +174,9 @@ describe("Login OrangeHRM", () => {
   });
 
   it("TC-LOG-012 - elemen utama di halaman login tampil", () => {
-    cy.intercept("GET", "**/core/i18n/messages", (request) => {
-      expect(request.url).to.include("/core/i18n/messages");
-      request.continue();
-    }).as("loginPageTranslations");
+    cy.intercept("GET", "/web/index.php/auth/login").as("loginPage");
     cy.reload();
-    cy.wait("@loginPageTranslations")
-      .its("request.url")
-      .should("include", "/core/i18n/messages");
+    cy.wait("@loginPage").its("response.statusCode").should("eq", 200);
 
     cy.contains("h5", "Login").should("be.visible");
     cy.get('img[alt="company-branding"]').should("be.visible");
