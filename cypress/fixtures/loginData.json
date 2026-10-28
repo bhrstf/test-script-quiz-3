@@ -1,0 +1,14 @@
+{
+  "validAdmin": {
+    "username": "Admin",
+    "password": "admin123"
+  },
+  "invalidUsername": "angel",
+  "invalidPassword": "wrongpassword",
+  "problemUsername": "problem_user",
+  "zeroUsername": "locked_out_user",
+  "zeroPassword": "locked_out_password",
+  "smallUsername": "admin",
+  "smallPassword": "admin123",
+  "uppercasePassword": "ADMIN123"
+}
