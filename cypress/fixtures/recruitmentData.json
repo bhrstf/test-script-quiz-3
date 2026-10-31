@@ -1,0 +1,39 @@
+{
+  "candidateSearchName": "Tara Bose",
+  "newCandidate": {
+    "firstName": "Raden",
+    "middleName": "Kian",
+    "lastName": "Santang",
+    "vacancy": "Software Quality Assurance Engineer",
+    "email": "raden.kiansantang_qa@enterprise-tech.io",
+    "contactNumber": "+6281298765432",
+    "dateOfApplication": "2026-10-31"
+  },
+  "candidateVacancy": {
+    "name": "Software Quality Assurance Engineer",
+    "jobTitle": "QA Engineer",
+    "hiringManager": "Tariq Baidis",
+    "numberOfPositions": "1"
+  },
+  "shortlistedStatus": "Shortlisted",
+  "rejectedStatus": "rejected",
+  "newVacancy": {
+    "name": "Senior Automation Testing Specialist 2026",
+    "jobTitle": "Automation Tester",
+    "hiringManager": "Tariq Baidis",
+    "numberOfPositions": "3"
+  },
+  "updatedVacancyName": "Junior Automation Testing",
+  "excelTestData": {
+    "TC-RCM-025": "data kandidat",
+    "TC-RCM-026": "Data kandidat yang ingin ditambahkan",
+    "TC-RCM-027": "-",
+    "TC-RCM-028": "-",
+    "TC-RCM-029": "-",
+    "TC-RCM-030": "-",
+    "TC-RCM-031": "-",
+    "TC-RCM-032": "-",
+    "TC-RCM-033": "-",
+    "TC-RCM-034": "-"
+  }
+}

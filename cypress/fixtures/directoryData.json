@@ -1,0 +1,17 @@
+{
+  "knownEmployee": "Peter Mac Anderson",
+  "jobTitle": "Chief Financial Officer",
+  "location": "New York Sales Office",
+  "excelTestData": {
+    "TC-DRC-013": "-",
+    "TC-DRC-014": "Peter Mac Anderson; Chief Financial Officer; New York Sales Office",
+    "TC-DRC-015": "Peter Mac Anderson",
+    "TC-DRC-016": "Job Title",
+    "TC-DRC-017": "Job Title",
+    "TC-DRC-018": "-",
+    "TC-DRC-019": "-",
+    "TC-DRC-020": "-",
+    "TC-DRC-021": "-",
+    "TC-DRC-022": "Data karyawan"
+  }
+}
